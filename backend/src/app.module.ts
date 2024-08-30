@@ -1,10 +1,18 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+
+import { AppConfig, DatabaseConfig, JwtConfig } from '@Config/configuration'
+import { validationSchema } from '@Config/validationSchema'
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [AppConfig, DatabaseConfig, JwtConfig],
+      validationSchema: validationSchema,
+    }),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
