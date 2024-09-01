@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigType } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { AuthModule } from '@Auth/auth.module'
 import { AppConfig, DatabaseConfig, JwtConfig } from '@Config/configuration'
 import { validationSchema } from '@Config/validationSchema'
 
@@ -25,8 +26,7 @@ import { validationSchema } from '@Config/validationSchema'
         synchronize: databaseConfig.synchronize,
       }),
     }),
+    AuthModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

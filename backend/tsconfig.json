@@ -2,7 +2,8 @@
   "compilerOptions": {
     "paths": {
       "@Shared/*": ["src/shared/*"],
-      "@Config/*": ["src/config/*"]
+      "@Config/*": ["src/config/*"],
+      "@Auth/*": ["src/auth/*"]
     },
 
     "module": "commonjs",
