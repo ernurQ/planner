@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt'
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -20,6 +21,8 @@ export class UsersEntity {
   @BeforeInsert()
   @BeforeUpdate()
   private async hashPassword() {
-    // TODO: hash password
+    if (!this.password) return
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
   }
 }

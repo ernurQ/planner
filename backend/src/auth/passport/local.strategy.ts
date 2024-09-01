@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { InjectRepository } from '@nestjs/typeorm'
+import * as bcrypt from 'bcrypt'
 import { Strategy } from 'passport-local'
 import { Repository } from 'typeorm'
 
@@ -25,8 +26,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new BadRequestException('User not found')
     }
-    // TODO: use bcrypt
-    if (user.password !== password) {
+
+    const isCorrectPassword = await bcrypt.compare(password, user.password)
+    if (!isCorrectPassword) {
       throw new UnauthorizedException()
     }
 
