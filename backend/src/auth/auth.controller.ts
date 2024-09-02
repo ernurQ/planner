@@ -9,6 +9,7 @@ import {
 import { AuthGuard } from '@nestjs/passport'
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiOkResponse,
@@ -17,7 +18,12 @@ import {
 } from '@nestjs/swagger'
 
 import { AuthService } from '@Auth/auth.service'
-import { LoginResponseDto, RegisterDto, RegisterResponseDto } from '@Auth/dto'
+import {
+  LoginDto,
+  LoginResponseDto,
+  RegisterDto,
+  RegisterResponseDto,
+} from '@Auth/dto'
 import { UsersEntity } from '@Shared/entities'
 
 @ApiTags('Auth')
@@ -25,22 +31,23 @@ import { UsersEntity } from '@Shared/entities'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('register')
   @ApiCreatedResponse({
     description: 'Register successful',
     type: RegisterResponseDto,
   })
   @ApiConflictResponse({ description: 'User already exists' })
-  @Post('register')
   async register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto)
   }
 
+  @Post('login')
+  @UseGuards(AuthGuard('local'))
+  @HttpCode(200)
+  @ApiOkResponse({ description: 'Login successful', type: LoginResponseDto })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   @ApiBadRequestResponse({ description: 'User not found' })
-  @ApiOkResponse({ description: 'Login successful', type: LoginResponseDto })
-  @UseGuards(AuthGuard('local'))
-  @Post('login')
-  @HttpCode(200)
+  @ApiBody({ type: LoginDto })
   async login(@Req() req: Request & { user: UsersEntity }) {
     return this.authService.login(req.user)
   }
