@@ -4,8 +4,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'
+
+import { UsersEntity } from '@Shared/entities'
 
 @Entity('plans')
 export class PlansEntity {
@@ -36,4 +40,8 @@ export class PlansEntity {
   @Expose()
   @CreateDateColumn()
   createdAt: Date
+
+  @ManyToOne(() => UsersEntity, (user) => user.plans)
+  @JoinColumn({ name: 'ownerName', referencedColumnName: 'name' })
+  owner?: UsersEntity
 }

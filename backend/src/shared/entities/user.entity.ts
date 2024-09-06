@@ -4,8 +4,11 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
+
+import { PlansEntity } from '@Shared/entities'
 
 @Entity('users')
 export class UsersEntity {
@@ -17,6 +20,9 @@ export class UsersEntity {
 
   @Column()
   password: string
+
+  @OneToMany(() => PlansEntity, (plan) => plan.owner)
+  plans?: PlansEntity[]
 
   @BeforeInsert()
   @BeforeUpdate()
