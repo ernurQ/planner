@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from '@Auth/auth.module'
 import { AppConfig, DatabaseConfig, JwtConfig } from '@Config/configuration'
 import { validationSchema } from '@Config/validationSchema'
+import { PlansModule } from '@Plans/plans.module'
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { validationSchema } from '@Config/validationSchema'
       }),
     }),
     AuthModule,
+    PlansModule,
   ],
 })
 export class AppModule {}

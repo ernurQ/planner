@@ -3,7 +3,8 @@
     "paths": {
       "@Shared/*": ["src/shared/*"],
       "@Config/*": ["src/config/*"],
-      "@Auth/*": ["src/auth/*"]
+      "@Auth/*": ["src/auth/*"],
+      "@Plans/*": ["src/plans/*"]
     },
 
     "module": "commonjs",
