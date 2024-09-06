@@ -6,10 +6,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-import { UsersEntity } from '@Shared/entities'
+import { NotesEntity, UsersEntity } from '@Shared/entities'
 
 @Entity('plans')
 export class PlansEntity {
@@ -44,4 +45,8 @@ export class PlansEntity {
   @ManyToOne(() => UsersEntity, (user) => user.plans)
   @JoinColumn({ name: 'ownerName', referencedColumnName: 'name' })
   owner?: UsersEntity
+
+  @Expose()
+  @OneToMany(() => NotesEntity, (note) => note.plan)
+  notes?: NotesEntity[]
 }
