@@ -25,17 +25,20 @@ export class PlansController {
     return this.plansService.getPlans(payload.name)
   }
 
-  @Get('/:title')
+  @Get('/:owner/:title')
   @ApiOkResponse({
     description: 'Plan info for unauthorized user',
     type: OmitType(PlansEntity, ['isPrivate'] as const),
   })
   @ApiNotFoundResponse({ description: 'Plan not found' })
-  async getPlanByTitleUnauthorized(@Param('title') title: string) {
-    return this.plansService.getPlanByTitleUnauthorized(title)
+  async getPlanByTitleUnauthorized(
+    @Param('owner') owner: string,
+    @Param('title') title: string,
+  ) {
+    return this.plansService.getPlanByTitleUnauthorized(owner, title)
   }
 
-  @Get('/:title/me')
+  @Get('/:title')
   @JwtAuth()
   @ApiOkResponse({
     description: 'Plan info for authorized user',
