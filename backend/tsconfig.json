@@ -4,7 +4,8 @@
       "@Shared/*": ["src/shared/*"],
       "@Config/*": ["src/config/*"],
       "@Auth/*": ["src/auth/*"],
-      "@Plans/*": ["src/plans/*"]
+      "@Plans/*": ["src/plans/*"],
+      "@Notes/*": ["src/notes/*"]
     },
 
     "module": "commonjs",
