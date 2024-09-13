@@ -8,11 +8,13 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm'
 
 import { NotesEntity, TasksEntity, UsersEntity } from '@Shared/entities'
 
 @Entity('plans')
+@Unique(['ownerName', 'title'])
 export class PlansEntity {
   @PrimaryGeneratedColumn()
   id: string
