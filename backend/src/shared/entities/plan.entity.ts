@@ -44,6 +44,11 @@ export class PlansEntity {
   @CreateDateColumn()
   createdAt: Date
 
+  @ApiProperty()
+  @Expose()
+  @Column({ default: false })
+  isTemplate: boolean
+
   @ManyToOne(() => UsersEntity, (user) => user.plans)
   @JoinColumn({ name: 'ownerName', referencedColumnName: 'name' })
   owner?: UsersEntity

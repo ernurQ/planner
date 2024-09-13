@@ -16,4 +16,10 @@ export class CreatePlanDto {
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   isPrivate: boolean
+
+  @ApiProperty()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  @IsOptional()
+  isTemplate: boolean
 }
