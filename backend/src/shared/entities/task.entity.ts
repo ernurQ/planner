@@ -30,7 +30,7 @@ export class TasksEntity {
   @ApiProperty()
   @Expose()
   @Column()
-  dueDate: string
+  dueDate: Date
 
   @ApiProperty()
   @Expose()
