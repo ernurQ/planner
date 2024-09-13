@@ -5,7 +5,8 @@
       "@Config/*": ["src/config/*"],
       "@Auth/*": ["src/auth/*"],
       "@Plans/*": ["src/plans/*"],
-      "@Notes/*": ["src/notes/*"]
+      "@Notes/*": ["src/notes/*"],
+      "@Tasks/*": ["src/tasks/*"]
     },
 
     "module": "commonjs",
