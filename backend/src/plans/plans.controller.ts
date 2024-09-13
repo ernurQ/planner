@@ -91,7 +91,6 @@ export class PlansController {
     @Body() updatePlanDto: UpdatePlanDto,
     @JwtPayload() payload: JwtTokenPayload,
   ) {
-    console.log('work')
     return this.plansService.updatePlan(title, updatePlanDto, payload.name)
   }
 
