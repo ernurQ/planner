@@ -25,7 +25,7 @@ export class PlansService {
   async getPlanByTitleUnauthorized(ownerName: string, title: string) {
     const plan = await this.plansRepository.findOne({
       where: { ownerName, title, isPrivate: false },
-      relations: { notes: true },
+      relations: { notes: true, tasks: true },
       select: {
         id: true,
         ownerName: true,
@@ -33,6 +33,12 @@ export class PlansService {
         description: true,
         createdAt: true,
         notes: { title: true, content: true },
+        tasks: {
+          id: true,
+          title: true,
+          content: true,
+          dueDate: true,
+        },
       },
     })
     if (!plan) throw new NotFoundException('Plan not found')
@@ -43,8 +49,17 @@ export class PlansService {
   async getPlanByTitleAuthorized(title: string, ownerName: string) {
     const plan = await this.plansRepository.findOne({
       where: { title, ownerName },
-      relations: { notes: true },
-      select: { notes: { id: true, title: true, content: true } },
+      relations: { notes: true, tasks: true },
+      select: {
+        notes: { id: true, title: true, content: true },
+        tasks: {
+          id: true,
+          title: true,
+          content: true,
+          dueDate: true,
+          isDone: true,
+        },
+      },
     })
     if (!plan) throw new NotFoundException('Plan not found')
 
