@@ -37,12 +37,13 @@ export class PlansService {
         title: true,
         description: true,
         createdAt: true,
-        notes: { title: true, content: true },
+        notes: { id: true, title: true, content: true, date: true },
         tasks: {
           id: true,
           title: true,
           content: true,
           dueDate: true,
+          isDone: true,
         },
       },
     })
@@ -56,7 +57,7 @@ export class PlansService {
       where: { title, ownerName },
       relations: { notes: true, tasks: true },
       select: {
-        notes: { id: true, title: true, content: true },
+        notes: { id: true, title: true, content: true, date: true },
         tasks: {
           id: true,
           title: true,
