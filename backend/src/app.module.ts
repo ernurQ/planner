@@ -7,7 +7,8 @@ import { AppConfig, DatabaseConfig, JwtConfig } from '@Config/configuration'
 import { validationSchema } from '@Config/validationSchema'
 import { NotesModule } from '@Notes/notes.module'
 import { PlansModule } from '@Plans/plans.module'
-import { TasksModule } from './tasks/tasks.module';
+import { TasksModule } from '@Tasks/tasks.module'
+import { TemplatesModule } from '@Templates/templates.module'
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { TasksModule } from './tasks/tasks.module';
     PlansModule,
     NotesModule,
     TasksModule,
+    TemplatesModule,
   ],
 })
 export class AppModule {}
