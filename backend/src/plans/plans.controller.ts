@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common'
 import {
   ApiCreatedResponse,
   ApiNotFoundResponse,
@@ -7,7 +16,7 @@ import {
   OmitType,
 } from '@nestjs/swagger'
 
-import { CreatePlanDto, UpdatePlanDto } from '@Plans/dto'
+import { CreatePlanDto, UpdateIsPrivateDto, UpdatePlanDto } from '@Plans/dto'
 import { PlansService } from '@Plans/plans.service'
 import { JwtAuth, JwtPayload } from '@Shared/decorators'
 import { PlansEntity } from '@Shared/entities'
@@ -93,5 +102,24 @@ export class PlansController {
     @JwtPayload() payload: JwtTokenPayload,
   ) {
     return this.plansService.deletePlan(title, payload.name)
+  }
+
+  @Patch('/:title/is-template')
+  @JwtAuth()
+  @ApiOkResponse({
+    description: 'Plan successfully updated',
+    type: PlansEntity,
+  })
+  @ApiNotFoundResponse({ description: 'Plan not found' })
+  async updateIsPrivate(
+    @Param('title') title: string,
+    @Body() updateIsPrivateDto: UpdateIsPrivateDto,
+    @JwtPayload() payload: JwtTokenPayload,
+  ) {
+    return this.plansService.updateIsPrivate(
+      updateIsPrivateDto,
+      payload.name,
+      title,
+    )
   }
 }
