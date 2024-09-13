@@ -27,6 +27,11 @@ export class NotesEntity {
   @Column({ default: '' })
   content: string
 
+  @ApiProperty()
+  @Expose()
+  @Column()
+  date: Date
+
   @ManyToOne(() => PlansEntity, (plan) => plan.notes)
   plan: PlansEntity
 }

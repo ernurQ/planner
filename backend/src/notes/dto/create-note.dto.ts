@@ -14,4 +14,8 @@ export class CreateNoteDto {
   @IsString()
   @IsOptional()
   content: string
+
+  @ApiProperty()
+  @IsString()
+  date: string
 }
