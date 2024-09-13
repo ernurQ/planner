@@ -6,7 +6,12 @@ import {
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import { CreatePlanDto, UpdateIsPrivateDto, UpdatePlanDto } from '@Plans/dto'
+import {
+  CreatePlanDto,
+  UpdateIsPrivateDto,
+  UpdateIsTemplateDto,
+  UpdatePlanDto,
+} from '@Plans/dto'
 import { PlansEntity } from '@Shared/entities'
 
 @Injectable()
@@ -117,6 +122,19 @@ export class PlansService {
     if (!plan) throw new NotFoundException('Plan not found')
 
     plan.isPrivate = updateIsPrivateDto.isPrivate
+
+    return this.plansRepository.save(plan)
+  }
+
+  async updateIsTemplate(
+    updateIsTemplateDto: UpdateIsTemplateDto,
+    ownerName: string,
+    title: string,
+  ) {
+    const plan = await this.plansRepository.findOneBy({ title, ownerName })
+    if (!plan) throw new NotFoundException('Plan not found')
+
+    plan.isTemplate = updateIsTemplateDto.isTemplate
 
     return this.plansRepository.save(plan)
   }
