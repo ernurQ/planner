@@ -10,7 +10,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-import { NotesEntity, UsersEntity } from '@Shared/entities'
+import { NotesEntity, TasksEntity, UsersEntity } from '@Shared/entities'
 
 @Entity('plans')
 export class PlansEntity {
@@ -49,4 +49,8 @@ export class PlansEntity {
   @Expose()
   @OneToMany(() => NotesEntity, (note) => note.plan)
   notes?: NotesEntity[]
+
+  @Expose()
+  @OneToMany(() => TasksEntity, (task) => task.plan)
+  tasks?: TasksEntity[]
 }
