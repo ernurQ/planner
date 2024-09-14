@@ -2,7 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@App/*": ["src/1-app/*"],
-      "@Pages*": ["src/2-pages/*"],
+      "@Pages/*": ["src/2-pages/*"],
       "@Widgets/*": ["src/3-widgets/*"],
       "@Features/*": ["src/4-features/*"],
       "@Entities/*": ["src/5-entities/*"],
