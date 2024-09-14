@@ -1,7 +1,15 @@
-import '@App/styles/index.scss'
+import { RouterProvider } from 'react-router-dom'
+
+import router from '@App/router'
+
+import './styles/index.scss'
 
 const App = () => {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  )
 }
 
 export default App
