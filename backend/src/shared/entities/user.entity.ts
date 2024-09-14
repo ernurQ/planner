@@ -12,7 +12,7 @@ import { PlansEntity } from '@Shared/entities'
 
 @Entity('users')
 export class UsersEntity {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Column({ unique: true })
