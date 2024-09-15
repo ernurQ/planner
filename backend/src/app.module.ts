@@ -9,6 +9,7 @@ import { NotesModule } from '@Notes/notes.module'
 import { PlansModule } from '@Plans/plans.module'
 import { TasksModule } from '@Tasks/tasks.module'
 import { TemplatesModule } from '@Templates/templates.module'
+import { UsersModule } from '@Users/users.module'
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { TemplatesModule } from '@Templates/templates.module'
     NotesModule,
     TasksModule,
     TemplatesModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
