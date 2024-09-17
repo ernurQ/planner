@@ -1,6 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { registerUser } from '@Features/auth-forms/api'
+import { routes } from '@Shared/config'
 import { PrimaryButton } from '@Shared/ui/buttons'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +23,7 @@ export const RegisterForm = () => {
     setResponseError('')
     const response = await registerUser(data)
     if (response.status === 201) {
-      navigate('/')
+      navigate(routes.home())
       return
     }
     if (response.status === 409) {

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { loginUser } from '@Features/auth-forms/api'
+import { routes } from '@Shared/config'
 import { PrimaryButton } from '@Shared/ui/buttons'
 import { ILoginForm } from '../model/ILogin-form'
 import { PasswordInput } from './Password-input'
@@ -23,7 +24,7 @@ export const LoginForm = () => {
     if (response.status === 200) {
       const data = await response.json()
       localStorage.setItem('token', data.token)
-      navigate('/')
+      navigate(routes.home())
       return
     }
     if (response.status === 401) {
