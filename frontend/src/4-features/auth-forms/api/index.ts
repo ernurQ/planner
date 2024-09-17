@@ -1,6 +1,6 @@
 import { ILoginForm } from '@Features/auth-forms/model/ILogin-form'
 import { IRegisterForm } from '@Features/auth-forms/model/IRegister-form'
-import { BACKEND_BASE_URL } from '@Shared/config'
+import { apiBaseUrl } from '@Shared/config'
 
 const fetchOptions = {
   method: 'POST',
@@ -10,13 +10,13 @@ const fetchOptions = {
 }
 
 export const registerUser = async ({ username, password }: IRegisterForm) =>
-  fetch(`${BACKEND_BASE_URL}/auth/register`, {
+  fetch(`${apiBaseUrl}/auth/register`, {
     ...fetchOptions,
     body: JSON.stringify({ name: username, password }),
   })
 
 export const loginUser = async (body: ILoginForm) => {
-  return fetch(`${BACKEND_BASE_URL}/auth/login`, {
+  return fetch(`${apiBaseUrl}/auth/login`, {
     ...fetchOptions,
     body: JSON.stringify(body),
   })

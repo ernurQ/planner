@@ -1,15 +1,8 @@
-import { RouterProvider } from 'react-router-dom'
-
-import router from '@App/router'
-
+import { withProviders } from '@App/providers'
 import './styles/index.scss'
 
 const App = () => {
-  return (
-    <>
-      <RouterProvider router={router} />
-    </>
-  )
+  return <div className='app'></div>
 }
 
-export default App
+export default withProviders(App)
