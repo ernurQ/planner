@@ -1,4 +1,5 @@
 export * from './create-plan.dto'
+export * from './get-one-plan-response.dto'
 export * from './update-isPrivate.dto'
 export * from './update-isTemplate.dto'
 export * from './update-plan.dto'
