@@ -15,62 +15,11 @@ import {
 import { PlansEntity } from '@Shared/entities'
 
 @Injectable()
-export class PlansService {
+export class PlansCommandService {
   constructor(
     @InjectRepository(PlansEntity)
     private readonly plansRepository: Repository<PlansEntity>,
   ) {}
-
-  async getPlans(ownerName: string) {
-    return this.plansRepository.find({
-      where: { ownerName },
-    })
-  }
-
-  async getPlanByTitleUnauthorized(ownerName: string, title: string) {
-    const plan = await this.plansRepository.findOne({
-      where: { ownerName, title, isPrivate: false },
-      relations: { notes: true, tasks: true },
-      select: {
-        id: true,
-        ownerName: true,
-        title: true,
-        description: true,
-        createdAt: true,
-        notes: { id: true, title: true, content: true, date: true },
-        tasks: {
-          id: true,
-          title: true,
-          content: true,
-          dueDate: true,
-          isDone: true,
-        },
-      },
-    })
-    if (!plan) throw new NotFoundException('Plan not found')
-
-    return plan
-  }
-
-  async getPlanByTitleAuthorized(title: string, ownerName: string) {
-    const plan = await this.plansRepository.findOne({
-      where: { title, ownerName },
-      relations: { notes: true, tasks: true },
-      select: {
-        notes: { id: true, title: true, content: true, date: true },
-        tasks: {
-          id: true,
-          title: true,
-          content: true,
-          dueDate: true,
-          isDone: true,
-        },
-      },
-    })
-    if (!plan) throw new NotFoundException('Plan not found')
-
-    return plan
-  }
 
   async createPlan(
     createPlanDto: CreatePlanDto,
