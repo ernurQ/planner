@@ -11,7 +11,7 @@ import {
   UpdateIsPrivateDto,
   UpdateIsTemplateDto,
   UpdatePlanDto,
-} from '@Plans/dto'
+} from '@Plans/dto-command'
 import { PlansEntity } from '@Shared/entities'
 
 @Injectable()
@@ -21,10 +21,7 @@ export class PlansCommandService {
     private readonly plansRepository: Repository<PlansEntity>,
   ) {}
 
-  async createPlan(
-    createPlanDto: CreatePlanDto,
-    ownerName: string,
-  ): Promise<PlansEntity> {
+  async createPlan(createPlanDto: CreatePlanDto, ownerName: string) {
     const planExists = await this.plansRepository.findOneBy({
       ownerName,
       title: createPlanDto.title,

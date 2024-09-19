@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-import { GetOnePlanResponseDto } from '@Plans/dto'
+import { GetOnePlanResponseDto } from '@Plans/dto-query'
 import { PlansEntity } from '@Shared/entities'
 import { plainToInstance } from 'class-transformer'
 
@@ -23,14 +23,14 @@ export class PlansQueryService {
 
   async getMyPlan(ownerName: string, title: string) {
     return plainToInstance(GetOnePlanResponseDto, {
-      ...(await this.findOnePlan(ownerName, title)),
+      plan: await this.findOnePlan(ownerName, title),
       isOwner: true,
     })
   }
 
   async getUserPlan(ownerName: string, title: string) {
     return plainToInstance(GetOnePlanResponseDto, {
-      ...(await this.findOnePlan(ownerName, title, { isPrivate: false })),
+      plan: await this.findOnePlan(ownerName, title, { isPrivate: false }),
       isOwner: false,
     })
   }
@@ -44,7 +44,7 @@ export class PlansQueryService {
       tasks: true,
     },
   ) {
-    const query = await this.plansRepository
+    const query = this.plansRepository
       .createQueryBuilder('plan')
       .where('plan.ownerName = :ownerName', { ownerName })
       .andWhere('plan.title = :title', { title })
@@ -60,14 +60,16 @@ export class PlansQueryService {
       query.leftJoinAndSelect('plan.tasks', 'tasks')
     }
 
-    return query.getOne()
+    const plan = await query.getOne()
+    if (!plan) throw new NotFoundException('Plan not found')
+    return plan
   }
 
   private async findManyPlans(
     ownerName: string,
     { isPrivate }: { isPrivate?: boolean } = {},
   ) {
-    const query = await this.plansRepository
+    const query = this.plansRepository
       .createQueryBuilder('plan')
       .where('plan.ownerName = :ownerName', { ownerName })
     if (isPrivate !== undefined) {
@@ -75,19 +77,5 @@ export class PlansQueryService {
     }
 
     return query.getMany()
-  }
-
-  private divideToPlansTemplates(entities: PlansEntity[]) {
-    const templates: PlansEntity[] = []
-    const plans: PlansEntity[] = []
-    entities.forEach((entity) => {
-      if (entity.isTemplate) {
-        templates.push(entity)
-      } else {
-        plans.push(entity)
-      }
-    })
-
-    return { templates, plans }
   }
 }

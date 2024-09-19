@@ -1,5 +1,5 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
 
 import { PlansQueryService } from '@Plans/plans-query.service'
 import {
@@ -8,7 +8,6 @@ import {
   OptionalJwtAuth,
   OptionalJwtPayload,
 } from '@Shared/decorators'
-import { PlansEntity } from '@Shared/entities'
 import { UserExistsGuard } from '@Shared/guards'
 import { JwtTokenPayload } from '@Shared/types'
 
@@ -17,13 +16,18 @@ import { JwtTokenPayload } from '@Shared/types'
 export class PlansQueryController {
   constructor(private readonly plansQueryService: PlansQueryService) {}
 
+  /**
+   * get my plans
+   */
   @Get()
   @JwtAuth()
-  @ApiOkResponse({ description: 'List of user`s plans', type: [PlansEntity] })
   async getPlans(@JwtPayload() payload: JwtTokenPayload) {
     return this.plansQueryService.getMyPlans(payload.name)
   }
 
+  /**
+   * get many plans by owner name
+   */
   @Get('/:ownerName')
   @OptionalJwtAuth()
   @UseGuards(UserExistsGuard)
@@ -38,9 +42,12 @@ export class PlansQueryController {
     return this.plansQueryService.getUserPlans(ownerName)
   }
 
+  /**
+   * get one plan
+   */
   @Get('/:ownerName/:title')
   @OptionalJwtAuth()
-  @ApiOkResponse({ description: 'Plan info', type: PlansEntity })
+  @ApiNotFoundResponse({ description: 'plan not found' })
   async getPlan(
     @Param('ownerName') ownerName: string,
     @Param('title') title: string,

@@ -8,9 +8,8 @@ import {
   Put,
 } from '@nestjs/common'
 import {
-  ApiCreatedResponse,
+  ApiConflictResponse,
   ApiNotFoundResponse,
-  ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
 
@@ -19,10 +18,9 @@ import {
   UpdateIsPrivateDto,
   UpdateIsTemplateDto,
   UpdatePlanDto,
-} from '@Plans/dto'
+} from '@Plans/dto-command'
 import { PlansCommandService } from '@Plans/plans-command.service'
 import { JwtAuth, JwtPayload } from '@Shared/decorators'
-import { PlansEntity } from '@Shared/entities'
 import { JwtTokenPayload } from '@Shared/types'
 
 @ApiTags('Plans command')
@@ -30,12 +28,12 @@ import { JwtTokenPayload } from '@Shared/types'
 export class PlansCommandController {
   constructor(private readonly plansCommandService: PlansCommandService) {}
 
+  /**
+   * create plan
+   */
   @Post()
   @JwtAuth()
-  @ApiCreatedResponse({
-    description: 'Plan successfully created',
-    type: PlansEntity,
-  })
+  @ApiConflictResponse({ description: 'Plan with this title already exists' })
   async createPlan(
     @Body() createPlanDto: CreatePlanDto,
     @JwtPayload() jwtPayload: JwtTokenPayload,
@@ -43,12 +41,11 @@ export class PlansCommandController {
     return this.plansCommandService.createPlan(createPlanDto, jwtPayload.name)
   }
 
+  /**
+   * update plan
+   */
   @Put('/:title')
   @JwtAuth()
-  @ApiOkResponse({
-    description: 'Plan successfully updated',
-    type: PlansEntity,
-  })
   @ApiNotFoundResponse({ description: 'Plan not found' })
   async updatePlan(
     @Param('title') title: string,
@@ -62,12 +59,11 @@ export class PlansCommandController {
     )
   }
 
+  /**
+   * delete plan
+   */
   @Delete('/:title')
   @JwtAuth()
-  @ApiOkResponse({
-    description: 'Plan successfully deleted',
-    type: PlansEntity,
-  })
   @ApiNotFoundResponse({ description: 'Plan not found' })
   async deletePlan(
     @Param('title') title: string,
@@ -76,12 +72,11 @@ export class PlansCommandController {
     return this.plansCommandService.deletePlan(title, payload.name)
   }
 
+  /**
+   * update plan isPrivate field
+   */
   @Patch('/:title/is-private')
   @JwtAuth()
-  @ApiOkResponse({
-    description: 'Plan successfully updated',
-    type: PlansEntity,
-  })
   @ApiNotFoundResponse({ description: 'Plan not found' })
   async updateIsPrivate(
     @Param('title') title: string,
@@ -95,12 +90,11 @@ export class PlansCommandController {
     )
   }
 
+  /**
+   * update plan isTemplate field
+   */
   @Patch('/:title/is-template')
   @JwtAuth()
-  @ApiOkResponse({
-    description: 'Plan successfully updated',
-    type: PlansEntity,
-  })
   @ApiNotFoundResponse({ description: 'Plan not found' })
   async updateIsTemplate(
     @Param('title') title: string,
