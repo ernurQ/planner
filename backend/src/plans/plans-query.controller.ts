@@ -1,6 +1,5 @@
 import { Controller, Get, Param, UseGuards } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { GetManyPlansResponseDto } from '@Plans/dto/get-many-plans-response.dto'
 
 import { PlansQueryService } from '@Plans/plans-query.service'
 import {
@@ -28,10 +27,6 @@ export class PlansQueryController {
   @Get('/:ownerName')
   @OptionalJwtAuth()
   @UseGuards(UserExistsGuard)
-  @ApiOkResponse({
-    description: 'List of user plans',
-    type: GetManyPlansResponseDto,
-  })
   async getPlansByOwnerName(
     @Param('ownerName') ownerName: string,
     @OptionalJwtPayload() payload: JwtTokenPayload | false,

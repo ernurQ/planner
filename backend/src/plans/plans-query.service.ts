@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
 import { GetOnePlanResponseDto } from '@Plans/dto'
-import { GetManyPlansResponseDto } from '@Plans/dto/get-many-plans-response.dto'
 import { PlansEntity } from '@Shared/entities'
 import { plainToInstance } from 'class-transformer'
 
@@ -15,19 +14,11 @@ export class PlansQueryService {
   ) {}
 
   async getMyPlans(username: string) {
-    const plans = await this.findManyPlans(username)
-    return plainToInstance(GetManyPlansResponseDto, {
-      ...this.divideToPlansTemplates(plans),
-      isOwner: true,
-    })
+    return this.findManyPlans(username)
   }
 
   async getUserPlans(username: string) {
-    const plans = await this.findManyPlans(username, { isPrivate: false })
-    return plainToInstance(GetManyPlansResponseDto, {
-      ...this.divideToPlansTemplates(plans),
-      isOwner: false,
-    })
+    return this.findManyPlans(username, { isPrivate: false })
   }
 
   async getMyPlan(ownerName: string, title: string) {
