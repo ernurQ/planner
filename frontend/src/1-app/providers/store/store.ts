@@ -7,4 +7,5 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(plannerApi.middleware),
+  devTools: true,
 })
