@@ -5,7 +5,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 
-import { CreatePlanDto } from '@Templates/dto'
+import { CreatePlanWithTemplateDto } from '@Templates/dto'
 import { TemplatesService } from '@Templates/templates.service'
 
 import { JwtAuth, JwtPayload } from '@Shared/decorators'
@@ -17,6 +17,9 @@ import { JwtTokenPayload } from '@Shared/types'
 export class TemplatesController {
   constructor(private readonly templatesService: TemplatesService) {}
 
+  /**
+   * create plan using template
+   */
   @Post()
   @JwtAuth()
   @ApiCreatedResponse({
@@ -25,7 +28,7 @@ export class TemplatesController {
   })
   @ApiNotFoundResponse({ description: 'Template not found' })
   async createPlan(
-    @Body() createPlanDto: CreatePlanDto,
+    @Body() createPlanDto: CreatePlanWithTemplateDto,
     @JwtPayload() payload: JwtTokenPayload,
   ) {
     const { templateOwner, templateTitle, title, isPrivate } = createPlanDto
