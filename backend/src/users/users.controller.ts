@@ -19,14 +19,6 @@ export class UsersController {
 
   @Get('/:name')
   @OptionalJwtAuth()
-  // @ApiOkResponse({
-  //   description: 'Get my info',
-  //   type: GetMyProfileResponseDto,
-  // })
-  // @ApiOkResponse({
-  //   description: 'Get user info',
-  //   type: GetUserProfileResponseDto,
-  // })
   @ApiExtraModels(
     GetMyProfileResponseDto,
     GetUserProfileResponseDto,

@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { Expose } from 'class-transformer'
 import {
   Column,
@@ -12,51 +11,50 @@ import {
 } from 'typeorm'
 
 import { NotesEntity, TasksEntity, UsersEntity } from '@Shared/entities'
+import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity('plans')
 @Unique(['ownerName', 'title'])
 export class PlansEntity {
+  @ApiHideProperty()
   @PrimaryGeneratedColumn()
   id: string
 
-  @ApiProperty()
   @Expose()
   @Column()
   ownerName: string
 
-  @ApiProperty()
   @Expose()
   @Column()
   title: string
 
-  @ApiProperty()
   @Expose()
   @Column({ default: '' })
   description: string
 
-  @ApiProperty()
   @Expose()
   @Column()
   isPrivate: boolean
 
-  @ApiProperty()
-  @Expose()
-  @CreateDateColumn()
-  createdAt: Date
-
-  @ApiProperty()
   @Expose()
   @Column({ default: false })
   isTemplate: boolean
 
+  @Expose()
+  @CreateDateColumn()
+  createdAt: Date
+
+  @ApiHideProperty()
   @ManyToOne(() => UsersEntity, (user) => user.plans)
   @JoinColumn({ name: 'ownerName', referencedColumnName: 'name' })
   owner?: UsersEntity
 
+  @ApiHideProperty()
   @Expose()
   @OneToMany(() => NotesEntity, (note) => note.plan)
   notes?: NotesEntity[]
 
+  @ApiHideProperty()
   @Expose()
   @OneToMany(() => TasksEntity, (task) => task.plan)
   tasks?: TasksEntity[]

@@ -8,26 +8,27 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm'
 
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiHideProperty } from '@nestjs/swagger'
 import { PlansEntity } from '@Shared/entities'
 import { Expose } from 'class-transformer'
 
 @Entity('users')
 export class UsersEntity {
+  @ApiHideProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Column({ unique: true })
-  @ApiProperty()
   @Expose()
   name: string
 
+  @ApiHideProperty()
   @Column()
   password: string
 
   @OneToMany(() => PlansEntity, (plan) => plan.owner)
-  @ApiProperty()
   @Expose()
+  @ApiHideProperty()
   plans?: PlansEntity[]
 
   @BeforeInsert()

@@ -11,6 +11,9 @@ import { JwtTokenPayload } from '@Shared/types'
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
+  /**
+   * create note
+   */
   @Post()
   @JwtAuth()
   async createNote(

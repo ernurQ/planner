@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiHideProperty } from '@nestjs/swagger'
 import { Expose } from 'class-transformer'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
@@ -6,37 +6,35 @@ import { PlansEntity } from '@Shared/entities'
 
 @Entity('tasks')
 export class TasksEntity {
-  @ApiProperty()
   @Expose()
   @PrimaryGeneratedColumn()
   id: string
 
+  @ApiHideProperty()
   @Column()
   planId: string
 
+  @ApiHideProperty()
   @Column()
   ownerName: string
 
-  @ApiProperty()
   @Expose()
   @Column()
   title: string
 
-  @ApiProperty()
   @Expose()
   @Column({ default: '' })
   content: string
 
-  @ApiProperty()
   @Expose()
   @Column()
   dueDate: Date
 
-  @ApiProperty()
   @Expose()
   @Column({ default: false })
   isDone: boolean
 
+  @ApiHideProperty()
   @ManyToOne(() => PlansEntity, (plan) => plan.tasks)
   plan?: PlansEntity
 }

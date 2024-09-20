@@ -1,10 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger'
 import { Transform } from 'class-transformer'
 import { IsBoolean } from 'class-validator'
 
-export class UpdateIsPrivateDto {
-  @ApiProperty()
+export class UpdateIsTemplateDto {
   @IsBoolean()
   @Transform(({ value }) => value === 'true' || value === true)
-  isPrivate: boolean
+  isTemplate: boolean
 }
