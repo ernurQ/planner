@@ -28,7 +28,7 @@ export class TasksEntity {
 
   @Expose()
   @Column()
-  dueDate: Date
+  date: Date
 
   @Expose()
   @Column({ default: false })

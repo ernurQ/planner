@@ -69,7 +69,7 @@ export class TemplatesService {
       this.copyTasksEntity(task, {
         planId: plan.id,
         ownerName: username,
-        dueDate: this.calculateDate(template.createdAt, task.dueDate),
+        date: this.calculateDate(template.createdAt, task.date),
       })
     })
 
@@ -123,15 +123,15 @@ export class TemplatesService {
     {
       planId,
       ownerName,
-      dueDate,
-    }: { planId: string; ownerName: string; dueDate: Date },
+      date,
+    }: { planId: string; ownerName: string; date: Date },
   ) {
     const task = this.tasksRepository.create({
       ...tasksEntity,
       id: undefined,
       planId,
       ownerName,
-      dueDate,
+      date,
       isDone: false,
       plan: undefined,
     })
