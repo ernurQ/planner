@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom'
 const Root = () => {
   return (
     <>
-      Root
       <Suspense fallback={<div>loading...</div>}>
         <Outlet />
       </Suspense>

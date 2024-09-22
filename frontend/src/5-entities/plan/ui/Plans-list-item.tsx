@@ -4,6 +4,7 @@ import { routes } from '@Shared/config'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { IPlan } from '../model/types'
+import { PlanTypeBadge } from './Plan-type-badge'
 
 interface Props {
   plan: IPlan
@@ -33,19 +34,10 @@ export const PlansListItem: FC<Props> = ({ plan }) => {
       </Link>
 
       <div>
-        <span
-          className={clsx(
-            'text-xs rounded text-center items-center',
-            'px-2 py-1 whitespace-nowrap',
-            {
-              'bg-blue-100 text-blue-700': plan.isPrivate,
-              'bg-green-100 text-green-700': !plan.isPrivate,
-            },
-          )}
-        >
-          {plan.isPrivate ? 'private' : 'public'}
-          {plan.isTemplate && ' template'}
-        </span>
+        <PlanTypeBadge
+          isPrivate={plan.isPrivate}
+          isTemplate={plan.isTemplate}
+        />
       </div>
 
       <div>

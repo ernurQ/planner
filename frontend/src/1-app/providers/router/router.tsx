@@ -9,6 +9,7 @@ const Login = lazy(() => import('@Pages/auth/login'))
 const Root = lazy(() => import('@Pages/root'))
 const Home = lazy(() => import('@Pages/root/home'))
 const User = lazy(() => import('@Pages/root/user'))
+const Plan = lazy(() => import('@Pages/root/plan'))
 
 export const router = createBrowserRouter([
   {
@@ -24,8 +25,12 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: ':username',
+        path: 'users/:username',
         element: <User />,
+      },
+      {
+        path: 'plan/:ownerName/:planTitle',
+        element: <Plan />,
       },
     ],
   },
