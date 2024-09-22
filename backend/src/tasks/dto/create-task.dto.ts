@@ -12,5 +12,5 @@ export class CreateTaskDto {
   content: string
 
   @IsString()
-  dueDate: string
+  date: string
 }
