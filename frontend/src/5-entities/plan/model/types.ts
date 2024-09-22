@@ -10,7 +10,17 @@ export interface IPlan {
   createdAt: string
 }
 
-export interface IPlanWithRelations {
+export interface IPlanWithRelations extends IPlan {
   notes: INote[]
   tasks: ITask[]
+}
+
+export interface IGetPlanQuery {
+  ownerName: string
+  planTitle: string
+}
+
+export interface IGetPlanResponse {
+  plan: IPlanWithRelations
+  isOwner: boolean
 }

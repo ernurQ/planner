@@ -1,1 +1,1 @@
-export { useGetUserPlansQuery } from './api'
+export { useGetPlanQuery, useGetUserPlansQuery } from './api-query'
