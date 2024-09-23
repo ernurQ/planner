@@ -22,9 +22,10 @@ export class TasksService {
     if (!plan) throw new NotFoundException('Plan not found')
 
     const task = this.tasksRepository.create({
+      ...createTaskDto,
       ownerName,
       plan,
-      ...createTaskDto,
+      date: new Date(createTaskDto.date),
     })
 
     return this.tasksRepository.save(task)

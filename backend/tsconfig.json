@@ -5,7 +5,6 @@
       "@Config/*": ["src/config/*"],
       "@Auth/*": ["src/auth/*"],
       "@Plans/*": ["src/plans/*"],
-      "@Notes/*": ["src/notes/*"],
       "@Tasks/*": ["src/tasks/*"],
       "@Templates/*": ["src/templates/*"],
       "@Users/*": ["src/users/*"]

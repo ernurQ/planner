@@ -4,10 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { TemplatesController } from '@Templates/templates.controller'
 import { TemplatesService } from '@Templates/templates.service'
 
-import { NotesEntity, PlansEntity, TasksEntity } from '@Shared/entities'
+import { PlansEntity, TasksEntity } from '@Shared/entities'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PlansEntity, NotesEntity, TasksEntity])],
+  imports: [TypeOrmModule.forFeature([PlansEntity, TasksEntity])],
   controllers: [TemplatesController],
   providers: [TemplatesService],
 })
