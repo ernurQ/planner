@@ -39,8 +39,7 @@ export class PlansQueryService {
     ownerName: string,
     title: string,
     { isPrivate }: { isPrivate?: boolean } = {},
-    { notes, tasks }: { notes?: boolean; tasks?: boolean } = {
-      notes: true,
+    { tasks }: { tasks?: boolean } = {
       tasks: true,
     },
   ) {
@@ -53,9 +52,6 @@ export class PlansQueryService {
       query.andWhere('plan.isPrivate = :isPrivate', { isPrivate })
     }
 
-    if (notes) {
-      query.leftJoinAndSelect('plan.notes', 'notes')
-    }
     if (tasks) {
       query.leftJoinAndSelect('plan.tasks', 'tasks')
     }
