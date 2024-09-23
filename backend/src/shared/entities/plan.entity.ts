@@ -10,7 +10,7 @@ import {
   Unique,
 } from 'typeorm'
 
-import { NotesEntity, TasksEntity, UsersEntity } from '@Shared/entities'
+import { TasksEntity, UsersEntity } from '@Shared/entities'
 import { ApiHideProperty } from '@nestjs/swagger'
 
 @Entity('plans')
@@ -48,11 +48,6 @@ export class PlansEntity {
   @ManyToOne(() => UsersEntity, (user) => user.plans)
   @JoinColumn({ name: 'ownerName', referencedColumnName: 'name' })
   owner?: UsersEntity
-
-  @ApiHideProperty()
-  @Expose()
-  @OneToMany(() => NotesEntity, (note) => note.plan)
-  notes?: NotesEntity[]
 
   @ApiHideProperty()
   @Expose()

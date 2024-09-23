@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { NotesEntity, PlansEntity, TasksEntity } from '@Shared/entities'
+import { PlansEntity, TasksEntity } from '@Shared/entities'
 import { addMinutes, differenceInMinutes } from 'date-fns'
 import { Repository } from 'typeorm'
 
@@ -9,8 +9,6 @@ export class TemplatesService {
   constructor(
     @InjectRepository(PlansEntity)
     private readonly plansRepository: Repository<PlansEntity>,
-    @InjectRepository(NotesEntity)
-    private readonly notesRepository: Repository<NotesEntity>,
     @InjectRepository(TasksEntity)
     private readonly tasksRepository: Repository<TasksEntity>,
   ) {}
@@ -29,7 +27,7 @@ export class TemplatesService {
           ownerName: userName,
           title: templateTitle,
         },
-        relations: { tasks: true, notes: true },
+        relations: { tasks: true },
       })
     } else {
       template = await this.plansRepository.findOne({
@@ -39,7 +37,7 @@ export class TemplatesService {
           ownerName: templateOwner,
           title: templateTitle,
         },
-        relations: { tasks: true, notes: true },
+        relations: { tasks: true },
       })
     }
     if (!template) throw new NotFoundException('Template not found')
@@ -57,13 +55,6 @@ export class TemplatesService {
       title: planTitle,
       isPrivate,
       ownerName: username,
-    })
-    template.notes?.forEach((note) => {
-      this.copyNotesEntity(note, {
-        planId: plan.id,
-        ownerName: username,
-        date: this.calculateDate(template.createdAt, note.date),
-      })
     })
     template.tasks?.forEach((task) => {
       this.copyTasksEntity(task, {
@@ -93,29 +84,9 @@ export class TemplatesService {
       isTemplate: false,
       title,
       owner: undefined,
-      notes: undefined,
       tasks: undefined,
     })
     return this.plansRepository.save(plan)
-  }
-
-  private async copyNotesEntity(
-    noteEntity: NotesEntity,
-    {
-      planId,
-      ownerName,
-      date,
-    }: { planId: string; ownerName: string; date: Date },
-  ) {
-    const note = this.notesRepository.create({
-      ...noteEntity,
-      id: undefined,
-      planId,
-      ownerName,
-      plan: undefined,
-      date,
-    })
-    return this.notesRepository.save(note)
   }
 
   private async copyTasksEntity(

@@ -5,11 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { AuthModule } from '@Auth/auth.module'
 import { AppConfig, DatabaseConfig, JwtConfig } from '@Config/configuration'
 import { validationSchema } from '@Config/validationSchema'
-import { NotesModule } from '@Notes/notes.module'
 import { PlansModule } from '@Plans/plans.module'
 import { TasksModule } from '@Tasks/tasks.module'
 import { TemplatesModule } from '@Templates/templates.module'
-import { UsersModule } from '@Users/users.module'
 
 @Module({
   imports: [
@@ -33,10 +31,8 @@ import { UsersModule } from '@Users/users.module'
     }),
     AuthModule,
     PlansModule,
-    NotesModule,
     TasksModule,
     TemplatesModule,
-    UsersModule,
   ],
 })
 export class AppModule {}
