@@ -10,7 +10,6 @@ export const routes = {
 		`/plan/${ownerName}/${planTitle}`,
 	planSettings: (ownerName: string, planTitle: string) =>
 		`/plan/${ownerName}/${planTitle}/settings`,
-	createPlan: () => '/plan/crate',
-	createPlanByTemplate: (templateOwner: string, templateTitle: string) =>
-		`/plan/create/template/${templateOwner}/${templateTitle}`
+	createPlan: () => '/plan/create',
+	createPlanWithTemplate: () => `/plan/create/with-template`
 }
