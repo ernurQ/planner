@@ -39,7 +39,7 @@ export class PlansCommandService {
 
   async updatePlan(
     title: string,
-    { description, isPrivate }: UpdatePlanDto,
+    { description, isPrivate, isTemplate }: UpdatePlanDto,
     ownerName: string,
   ) {
     const plan = await this.plansRepository.findOneBy({
@@ -48,8 +48,9 @@ export class PlansCommandService {
     })
     if (!plan) throw new NotFoundException('Plan not found')
 
-    if (description) plan.description = description
-    if (isPrivate) plan.isPrivate = isPrivate
+    if (description !== undefined) plan.description = description
+    if (isPrivate !== undefined) plan.isPrivate = isPrivate
+    if (isTemplate !== undefined) plan.isTemplate = isTemplate
 
     return this.plansRepository.save(plan)
   }
