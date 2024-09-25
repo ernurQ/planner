@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async register({
-    name,
+    username: name,
     password,
   }: RegisterDto): Promise<RegisterResponseDto> {
     const userExists = await this.usersRepository.findOneBy({ name })
